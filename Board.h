@@ -2,10 +2,11 @@
 #define _BOARD_H_
 
 #include "Rule.h"
+#include <cstring>
 
 class Board {
   private:
-    bool *data;
+    char *data;
     int sizeX;
     int sizeY;
   public:
@@ -13,7 +14,10 @@ class Board {
     Board(const int x,const int y) {
       sizeX = x;
       sizeY = y;
-      data = new bool[x*y];
+      data = new char[x*y];
+    }
+    Board(const int x,const int y, char **init): Board(x,y) {
+      memcpy(data, init, x*y);
     }
     int print();
 };

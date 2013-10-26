@@ -3,6 +3,6 @@
 
 class Rule {
   public:
-    virtual bool* compute(const int sizeX, const int sizeY, bool **data);
+    virtual char* compute(const int sizeX, const int sizeY, char data[])=0;
 };
 #endif
