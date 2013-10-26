@@ -13,4 +13,5 @@ int Board::print() {
 
 int Board::run(Rule *r) {
   data = r->compute(sizeX ,sizeY, data);
+  return 0;
 }
