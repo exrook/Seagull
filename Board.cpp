@@ -2,8 +2,8 @@
 #include <iostream>
 
 int Board::print() {
-  for(int i = 0; i < sizeX; i++) {
-    for(int j = 0; j < sizeY; j++) {
+  for(int i = 0; i < sizeY; i++) {
+    for(int j = 0; j < sizeX; j++) {
       std::cout << (data[i*sizeX+j] == 1 ? '#' : '-') << ' ';
       //std::cout << int(data[i*sizeX+j]) << ' ';
     }
