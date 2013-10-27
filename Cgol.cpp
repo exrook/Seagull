@@ -10,10 +10,22 @@ char* Cgol::compute(const int sizeX, const int sizeY, char data[]) {
       nc = 0; // neighbor count
       
       if (i) // if this is not the first row, then count neighbors above current cell
-        nc = (j ? data[(po-1)-sizeX] : 0) + data[po-sizeX] + (j < (sizeY-1) ? data[(po+1)-sizeX] : 0);
-      nc += (j ? data[po-1] : 0) + (j < (sizeY-1) ? data[po+1] : 0);
+        nc = (j ? data[(po-1)-sizeX]:data[(po-1)]) + data[po-sizeX] \
+           + (j < (sizeX-1) ? data[(po+1)-sizeX] : data[po+1-(2*sizeX)]);
+      else //if this is first row, loop back around
+        nc = (j ? data[(sizeY-1)*sizeX+po-1] : data[(sizeY)*sizeX-1])\
+           + data[(sizeY-1)*sizeX+po]\
+           + (j < sizeX-1 ? data[(sizeY-1)*sizeX+po+1] : data[(sizeY-1)*sizeX]);
+           
+      nc += (j ? data[po-1] : data[(i*sizeX)+sizeX-1]) + (j < sizeX-1 ? data[po+1] : data[(i*sizeX)+1]);
       if (i < (sizeY-1)) // if this is not the last row, count neighbors below us
-        nc += (j ? data[(po-1)+sizeX] : 0) + data[po+sizeX] + (j < (sizeY-1) ? data[(po+1)+sizeX] : 0);
+        nc += (j ? data[(po-1)+sizeX] : data[po-1+(2*sizeX)]) + data[po+sizeX]\
+           + (j < (sizeX-1) ? data[(po+1)+sizeX] : data[po+1]);
+      else // if this is the last row, loop around
+        nc += (j ? data[j-1] : data[sizeX-1])\
+           + data[j]\
+           + (j < sizeX-1 ? data[j+1] : data[0]);
+
       if (nc < 2)
         out[po] = 0;
       else if ((nc <= 3) && (data[po] != 0))
