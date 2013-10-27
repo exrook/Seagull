@@ -17,7 +17,8 @@ char* Cgol::compute(const int sizeX, const int sizeY, char data[]) {
            + data[(sizeY-1)*sizeX+po]\
            + (j < sizeX-1 ? data[(sizeY-1)*sizeX+po+1] : data[(sizeY-1)*sizeX]);
            
-      nc += (j ? data[po-1] : data[(i*sizeX)+sizeX-1]) + (j < sizeX-1 ? data[po+1] : data[(i*sizeX)+1]);
+      nc += (j ? data[po-1] : data[(i*sizeX)+sizeX-1]) + (j < (sizeX-1) ? data[po+1] : data[(i*sizeX)]);
+      
       if (i < (sizeY-1)) // if this is not the last row, count neighbors below us
         nc += (j ? data[(po-1)+sizeX] : data[po-1+(2*sizeX)]) + data[po+sizeX]\
            + (j < (sizeX-1) ? data[(po+1)+sizeX] : data[po+1]);
