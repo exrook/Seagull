@@ -4,7 +4,8 @@
 int Board::print() {
   for(int i = 0; i < sizeX; i++) {
     for(int j = 0; j < sizeY; j++) {
-      std::cout << (data[i*sizeY+j] == 1 ? '#' : '-') << ' ';
+      std::cout << (data[i*sizeX+j] == 1 ? '#' : '-') << ' ';
+      //std::cout << int(data[i*sizeX+j]) << ' ';
     }
     std::cout << "\n";
   }
