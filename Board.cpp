@@ -4,8 +4,11 @@
 int Board::print() {
   for(int i = 0; i < sizeY; i++) {
     for(int j = 0; j < sizeX; j++) {
+      #ifdef DEBUG
+      std::cout << int(data[i*sizeX+j]) << ' ';
+      #else
       std::cout << (data[i*sizeX+j] == 1 ? '#' : '-') << ' ';
-      //std::cout << int(data[i*sizeX+j]) << ' ';
+      #endif
     }
     std::cout << "\n";
   }
@@ -13,6 +16,6 @@ int Board::print() {
 }
 
 int Board::run(Rule *r) {
-  data = r->compute(sizeX ,sizeY, data);
+  memcpy(data, r->compute(sizeX ,sizeY, data),sizeX*sizeY);
   return 0;
 }

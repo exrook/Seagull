@@ -20,7 +20,7 @@ char init[10][10] = \
 {1,1,1,0,0,0,0,0,0,0},
 {0,0,0,0,0,0,0,0,0,0}};
 
-char* parse(std::istream &in, int &w, int &h);
+std::vector<char> parse(std::istream &in, int &w, int &h);
 
 int main(int argc, char *argv[]) {
   bool pretty = false;
@@ -46,9 +46,12 @@ int main(int argc, char *argv[]) {
   }
   
   int w = 10, h=10;
-  char **lolp = (char**)&init;
-  if (!demo)
-    lolp = (char**)parse(std::cin,w,h);
+  char *lolp = (char*)&init;
+  if (!demo) {
+    std::vector<char> conv = parse(std::cin,w,h);
+    lolp = new char[w*h];
+    std::copy(conv.begin(),conv.end(),lolp);
+  }
   Board lol(w,h,lolp);
   if (pretty) lol.print();
   Rule *sd = new Cgol();
@@ -63,10 +66,9 @@ int main(int argc, char *argv[]) {
   if (!pretty) lol.print();
 }
 
-char* parse(std::istream &in, int &w, int &h) {
+std::vector<char> parse(std::istream &in, int &w, int &h) {
   std::vector<char> data;
   char l;
-  char *out;
   w = 0;
   h = 0;
 
@@ -83,5 +85,7 @@ char* parse(std::istream &in, int &w, int &h) {
     h++;
   }
   h--;
-  return &data[0]; 
+  //out = new char[w*h];
+  //std::copy(data.begin(),data.end(),out);
+  return data;
 }

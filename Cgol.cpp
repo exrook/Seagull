@@ -1,9 +1,18 @@
 #include "Cgol.h"
+#ifdef USE_OMP
+#include <omp.h>
+#endif
 
 char* Cgol::compute(const int sizeX, const int sizeY, char data[]) {
   int po = 0;
   int nc = 0;
-  char *out = new char[sizeX*sizeY];
+  if (!out)
+    out = new char[sizeX*sizeY];
+  #ifdef USE_OMP
+  #pragma omp parallel private(po,nc)
+  {
+  #pragma omp for schedule(dynamic) nowait
+  #endif
   for(int i = 0; i < (sizeY); i++) {
     for(int j = 0; j < (sizeX); j++) {
       po = i*sizeX+j; // current cell
@@ -35,8 +44,14 @@ char* Cgol::compute(const int sizeX, const int sizeY, char data[]) {
         out[po] = 0;
       else
         out[po] = 1;
-      //out[po] = nc;
+      #ifdef DEBUG
+      out[po] = nc;
+      #endif
     }
   }
+  #ifdef USE_OMP
+  }
+  #pragma omp taskwait
+  #endif
   return out;
 }

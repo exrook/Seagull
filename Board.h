@@ -16,7 +16,7 @@ class Board {
       sizeY = y;
       data = new char[x*y];
     }
-    Board(const int x,const int y, char **init): Board(x,y) {
+    Board(const int x,const int y, const char init[]): Board(x,y) {
       memcpy(data, init, x*y);
     }
     int print();
